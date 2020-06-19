@@ -15,9 +15,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          npm install
-          npm run bench > bench_results.txt 2>&1
-          mv bench_results.txt packages/opentelemetry-api/docs/out
+          npm install --ignore-scripts
           npx lerna bootstrap --scope @opentelemetry/api --include-filtered-dependencies
           npm run docs
 
@@ -27,3 +25,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: packages/opentelemetry-api/docs/out # The folder the action should deploy.
+
+  benchmark-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          cd packages/opentelemetry-api/docs/out
+          mkdir benchmark
+          cd benchmark
+          npm run bench > bench_results.txt 2>&1
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: packages/opentelemetry-api/docs/out/benchmark # The folder the action should deploy.
