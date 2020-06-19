@@ -18,7 +18,9 @@ jobs:
           npm install --ignore-scripts
           npx lerna bootstrap --scope @opentelemetry/api --include-filtered-dependencies
           npm run docs
-          npm run bench > bench_results.txt 2>&1
+          script bench_results.txt
+          npm run bench
+          exit
           mv bench_results.txt packages/opentelemetry-api/docs/out
 
       - name: Deploy 🚀
