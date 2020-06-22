@@ -35,8 +35,8 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install --ignore-scripts
-          mkdir benchmark
-          cd benchmark
+          mkdir benchmark_res
+          cd benchmark_res
           npm run bench > bench_results.txt 2>&1
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
