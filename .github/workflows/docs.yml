@@ -34,7 +34,7 @@ jobs:
         
       - name: Install and Build 🔧
         run: |
-          npm install
+          npm install --ignore-scripts
           cd packages/opentelemetry-api/docs/out
           mkdir benchmark
           cd benchmark
